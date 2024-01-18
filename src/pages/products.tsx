@@ -1,8 +1,7 @@
 import { ColumnType } from 'rc-table';
 import React from 'react';
 
-import Loader from '@/components/ui/loader/loader';
-import { Table } from '@/components/ui/table';
+import AsyncTable from '@/components/ui/asyncTable';
 import { useProductQuery } from '@/service/product';
 import { Product } from '@/types';
 
@@ -31,15 +30,12 @@ const Products = () => {
   const { products, isLoading } = useProductQuery();
   return (
     <>
-      {isLoading ? (
-        <Loader text="Loading products" />
-      ) : products && products?.length > 0 ? (
-        <div>
-          <Table columns={columns} data={products} rowKey="id" />
-        </div>
-      ) : (
-        <p>No Data found</p>
-      )}
+      <AsyncTable<Product>
+        isLoading={isLoading}
+        columns={columns}
+        data={products}
+        rowKey="id"
+      />
     </>
   );
 };

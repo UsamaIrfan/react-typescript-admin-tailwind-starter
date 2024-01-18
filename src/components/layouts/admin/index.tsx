@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { Outlet } from 'react-router-dom';
 
-import Link from '@/components/ui/link';
+import Link from '@/components/ui/Link';
 import { siteSettings } from '@/settings/siteSettings';
 
 const SideBarGroup = () => {

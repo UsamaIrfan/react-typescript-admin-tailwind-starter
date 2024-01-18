@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 
-import AdminLayout from './components/layouts/admin';
+import AdminLayout from './components/layouts/Admin';
 import { Home } from './pages';
 import Products from './pages/products';
 import APP_ROUTES from './utils/routes';

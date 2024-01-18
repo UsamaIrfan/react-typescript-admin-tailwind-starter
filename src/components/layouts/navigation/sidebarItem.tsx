@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { useWindowSize } from 'react-use';
 
-import Link from '@/components/ui/link';
+import Link from '@/components/ui/Link';
 import { RESPONSIVE_WIDTH } from '@/utils/constants';
 
 const SidebarItem = ({
