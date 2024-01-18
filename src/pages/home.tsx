@@ -21,13 +21,21 @@ const Home = () => {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1 className="bg-red-500">Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button
+          className="border-0 bg-blue-300 rounded-md m-3 p-3"
+          onClick={() => setCount((count) => count + 1)}
+        >
           count is {count}
         </button>
 
-        <button onClick={onLogin}>Trigger Dummy API</button>
+        <button
+          className="border-0 bg-blue-300 rounded-md m-3 p-3"
+          onClick={onLogin}
+        >
+          Trigger Dummy API
+        </button>
         <p>API Status: {status}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
