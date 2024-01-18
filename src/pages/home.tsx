@@ -21,7 +21,7 @@ const Home = () => {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1 className="bg-red-500">Vite + React</h1>
+      <h1 className="text-2xl font-sans font-bold my-5">Vite + React</h1>
       <div className="card">
         <button
           className="border-0 bg-blue-300 rounded-md m-3 p-3"
