@@ -7,6 +7,7 @@ import { useCrudOpertions } from '@/service/crud';
 
 interface CrudTableProps<T> extends TableProps<T> {
   onEdit: (record: T) => void;
+  onAdd?: () => void;
   endpoint: string;
   buttons?: ReactNode;
   tableTitle?: string;
@@ -18,6 +19,8 @@ const CrudTable = <T extends object>({
   buttons,
   tableTitle,
   onEdit,
+  onAdd,
+  rowKey = 'id',
   ...props
 }: CrudTableProps<T>) => {
   const { useBaseQuery, useDeleteBaseMutation } = useCrudOpertions<T>(endpoint);
@@ -33,6 +36,12 @@ const CrudTable = <T extends object>({
   const handleEdit = (record: T) => {
     onEdit(record);
   };
+
+  const DefaultButtons = () => (
+    <div>
+      <Button onClick={onAdd && onAdd}>Add Product</Button>
+    </div>
+  );
 
   const editColumn = {
     title: 'Actions',
@@ -59,13 +68,13 @@ const CrudTable = <T extends object>({
     <div>
       <div className="flex justify-between mb-4">
         <h2 className="text-2xl">{tableTitle}</h2>
-        {buttons}
+        {buttons ?? <DefaultButtons />}
       </div>
       <AsyncTable<T>
         isLoading={isLoading}
         columns={tableColumns}
         data={data}
-        rowKey="id"
+        rowKey={rowKey}
         {...props}
       />
     </div>
