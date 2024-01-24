@@ -1,6 +1,6 @@
 import RCTable, { TableProps } from 'rc-table';
 
-import Loader from './Loader/Loader';
+import Loader from './loader/Loader';
 
 interface AsyncTableProps<T> extends TableProps<T> {
   isLoading?: boolean;

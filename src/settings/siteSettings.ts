@@ -1,7 +1,7 @@
 import APP_ROUTES from '@/utils/routes';
 
 export const siteSettings = {
-  name: 'Patient',
+  name: 'Patient Portal',
   description: '',
   logo: {},
   collapseLogo: {},
@@ -19,5 +19,8 @@ export const siteSettings = {
         icon: 'DashboardIcon',
       },
     ],
+  },
+  avatar: {
+    placeholder: '/avatar-placeholder.svg',
   },
 };

@@ -1,49 +1,35 @@
-import cn from 'classnames';
 import { Outlet } from 'react-router-dom';
 
-import Link from '@/components/ui/Link';
 import { siteSettings } from '@/settings/siteSettings';
 
-const SideBarGroup = () => {
-  const menuItems = siteSettings?.sidebarLinks?.admin;
+import MobileNavigation from '../Navigation/MobileNavigation';
+import Navbar from '../Navigation/Navbar';
+import SidebarItem from '../Navigation/SidebarItem';
 
-  return (
+const AdminLayout = () => {
+  const SidebarItemMap = () => (
     <>
-      {menuItems?.map((menu, index) => (
-        <div
-          className={cn(
-            'flex flex-col px-5 py-5 border-b hover:bg-slate-100 hover:cursor-pointer',
-          )}
-          key={index}
-        >
-          <Link to={menu?.href}>{menu?.label}</Link>
-        </div>
+      {siteSettings.sidebarLinks.admin.map(({ href, label, icon }) => (
+        <SidebarItem href={href} label={label} icon={icon} key={href} />
       ))}
     </>
   );
-};
 
-const AdminLayout: React.FC<{ children?: React.ReactNode }> = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 transition-colors duration-150">
-      <div className="flex flex-1">
-        <aside
-          className={cn(
-            'relative bottom-0 z-10 hidden min-h-screen h-full w-72 bg-white shadow transition-[width] duration-300 ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto lg:block',
-          )}
-        >
-          <div className="sidebar-scrollbar h-full w-full overflow-x-hidden">
-            <div className="h-full w-full">
-              <SideBarGroup />
-            </div>
+    <div className="min-h-screen bg-gray-100 flex flex-col transition-colors duration-150">
+      <Navbar />
+      <MobileNavigation>
+        <SidebarItemMap />
+      </MobileNavigation>
+
+      <div className="flex flex-1 pt-20">
+        <aside className="shadow w-72 xl:w-76 hidden lg:block overflow-y-auto bg-white px-4 fixed start-0 bottom-0 h-full pt-22">
+          <div className="flex flex-col space-y-6 py-3">
+            <SidebarItemMap />
           </div>
         </aside>
-        <main
-          className={cn(
-            'relative flex w-full flex-col justify-start transition-[padding] duration-300',
-          )}
-        >
-          <div className="h-full p-5 md:p-8">
+        <main className="w-full lg:ps-72 xl:ps-76">
+          <div className="p-5 md:p-8 overflow-y-auto h-full">
             <Outlet />
           </div>
         </main>

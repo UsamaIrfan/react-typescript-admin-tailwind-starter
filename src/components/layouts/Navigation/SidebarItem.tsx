@@ -12,7 +12,7 @@ const SidebarItem = ({
   href: any;
   icon: any;
   label: string;
-  childMenu: [];
+  childMenu?: [];
   miniSidebar?: boolean;
 }) => {
   const { width } = useWindowSize();
