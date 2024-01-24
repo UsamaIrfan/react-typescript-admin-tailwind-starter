@@ -1,6 +1,5 @@
 import Home from './Home';
 import Products from './Products';
-import AddProduct from './Products/AddProduct';
-import EditProduct from './Products/EditProduct';
+import AddEditProduct from './Products/AddEditProduct';
 
-export { AddProduct, EditProduct, Home, Products };
+export { AddEditProduct, Home, Products };

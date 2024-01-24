@@ -1,16 +1,16 @@
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import { API_ENDPOINTS } from '@/service/client/apiEndpoints';
 import { useCrudOpertions } from '@/service/crud';
 import { Product } from '@/types';
 import APP_ROUTES from '@/utils/routes';
 
-import Button from '../ui/Button';
-import Input from '../ui/Input';
-
-type UpsertProductFormProps = {
+type ProductFormProps = {
   initialValues?: Partial<Product>;
 };
 
@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
   category: yup.string().required('Product category is required'),
 });
 
-const UpsertProductForm = ({ initialValues }: UpsertProductFormProps) => {
+const ProductForm = ({ initialValues }: ProductFormProps) => {
   const navigate = useNavigate();
   const { useCreateBaseMutation, useUpdateBaseMutation } =
     useCrudOpertions<Product>(API_ENDPOINTS.PRODUCTS);
@@ -52,18 +52,30 @@ const UpsertProductForm = ({ initialValues }: UpsertProductFormProps) => {
     }
   };
 
-  const { handleSubmit, handleBlur, handleChange, values, errors } = useFormik({
-    onSubmit,
-    validationSchema,
-    initialValues: {
-      title: initialValues?.title,
-      description: initialValues?.description,
-      category: initialValues?.category,
-      price: initialValues?.price,
-    },
-    validateOnChange: false,
-    validateOnBlur: false,
-  });
+  const { handleSubmit, handleBlur, handleChange, values, errors, setValues } =
+    useFormik({
+      onSubmit,
+      validationSchema,
+      initialValues: {
+        title: initialValues?.title,
+        description: initialValues?.description,
+        category: initialValues?.category,
+        price: initialValues?.price,
+      },
+      validateOnChange: false,
+      validateOnBlur: false,
+    });
+
+  useEffect(() => {
+    if (initialValues) {
+      setValues({
+        title: initialValues.title,
+        description: initialValues.description,
+        category: initialValues.category,
+        price: initialValues.price,
+      });
+    }
+  }, [initialValues, setValues]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -114,4 +126,23 @@ const UpsertProductForm = ({ initialValues }: UpsertProductFormProps) => {
   );
 };
 
-export default UpsertProductForm;
+const AddEditProduct = () => {
+  const params = useParams();
+
+  const { useBaseByIdQuery } = useCrudOpertions<Product>(
+    API_ENDPOINTS.PRODUCTS,
+  );
+
+  const { data } = useBaseByIdQuery(params?.id as string);
+
+  return (
+    <div>
+      <h2 className="font-sans text-2xl mb-5">
+        {params?.id ? 'Update' : 'Add'} Product
+      </h2>
+      <ProductForm initialValues={data} />
+    </div>
+  );
+};
+
+export default AddEditProduct;

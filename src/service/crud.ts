@@ -13,8 +13,10 @@ export const useCrudOpertions = <EntityType extends object>(
     useQuery<EntityType[], Error>(baseEndpoint, () => baseService.find());
 
   const useBaseByIdQuery = (id: string | number) =>
-    useQuery<EntityType, Error>([baseEndpoint, id], () =>
-      baseService.getById(id),
+    useQuery<EntityType, Error>(
+      [baseEndpoint, id],
+      () => baseService.getById(id),
+      { enabled: !!id },
     );
 
   const useCreateBaseMutation = () =>
