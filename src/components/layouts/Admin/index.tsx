@@ -1,12 +1,24 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
+import { AuthHelper } from '@/helpers';
 import { siteSettings } from '@/settings/siteSettings';
+import APP_ROUTES from '@/utils/routes';
 
 import MobileNavigation from '../Navigation/MobileNavigation';
 import Navbar from '../Navigation/Navbar';
 import SidebarItem from '../Navigation/SidebarItem';
 
 const AdminLayout = () => {
+  const navigate = useNavigate();
+  const { token } = AuthHelper.getAuthCredentials();
+
+  useEffect(() => {
+    if (!token) {
+      navigate(APP_ROUTES.LOGIN);
+    }
+  }, [token, navigate]);
+
   const SidebarItemMap = () => (
     <>
       {siteSettings.sidebarLinks.admin.map(({ href, label, icon }) => (

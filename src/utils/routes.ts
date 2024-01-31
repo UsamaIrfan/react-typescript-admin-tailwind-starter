@@ -4,6 +4,9 @@ const APP_ROUTES = {
   PRODUCTS: '/products',
   ADD_PRODUCTS: '/products/add',
   EDIT_PRODUCTS: '/products/:id',
+  ORDERS: '/orders',
+  ADD_ORDERS: '/orders/add',
+  EDIT_ORDERS: '/orders/:id',
 };
 
 export default APP_ROUTES;

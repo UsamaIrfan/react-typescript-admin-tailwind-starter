@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  QueryKey,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from 'react-query';
 
 import Base from './client/base';
 
@@ -9,8 +15,21 @@ export const useCrudOpertions = <EntityType extends object>(
   const queryClient = useQueryClient();
   const baseService = new Base<EntityType>(baseUrl);
 
-  const useBaseQuery = () =>
-    useQuery<EntityType[], Error>(baseEndpoint, () => baseService.find());
+  const useBaseQuery = ({
+    options,
+  }: {
+    options?:
+      | Omit<
+          UseQueryOptions<EntityType[], Error, EntityType[], QueryKey>,
+          'queryKey' | 'queryFn'
+        >
+      | undefined;
+  }) =>
+    useQuery<EntityType[], Error>(
+      baseEndpoint,
+      () => baseService.find(),
+      options,
+    );
 
   const useBaseByIdQuery = (id: string | number) =>
     useQuery<EntityType, Error>(

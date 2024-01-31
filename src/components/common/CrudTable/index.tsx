@@ -8,7 +8,7 @@ import { useCrudOpertions } from '@/service/crud';
 interface CrudTableProps<T> extends TableProps<T> {
   onEdit: (record: T) => void;
   onAdd?: () => void;
-  endpoint: string;
+  endpoint?: string;
   buttons?: ReactNode;
   tableTitle?: string;
 }
@@ -19,13 +19,18 @@ const CrudTable = <T extends object>({
   buttons,
   tableTitle,
   onEdit,
+  data: tableData,
   onAdd,
   rowKey = 'id',
   ...props
 }: CrudTableProps<T>) => {
-  const { useBaseQuery, useDeleteBaseMutation } = useCrudOpertions<T>(endpoint);
+  const { useBaseQuery, useDeleteBaseMutation } = useCrudOpertions<T>(
+    endpoint ?? '',
+  );
 
-  const { data, isLoading } = useBaseQuery();
+  const { data, isLoading } = useBaseQuery({
+    options: { enabled: !tableData && !!endpoint },
+  });
 
   const { mutate: deleteBase, isLoading: deleting } = useDeleteBaseMutation();
 
@@ -39,7 +44,7 @@ const CrudTable = <T extends object>({
 
   const DefaultButtons = () => (
     <div>
-      <Button onClick={onAdd && onAdd}>Add Product</Button>
+      <Button onClick={onAdd && onAdd}>Add {tableTitle}</Button>
     </div>
   );
 
@@ -51,13 +56,15 @@ const CrudTable = <T extends object>({
         <Button variant="normal" onClick={() => handleEdit(record)}>
           Edit
         </Button>
-        <Button
-          variant="outline"
-          loading={deleting}
-          onClick={() => handleDelete(record)}
-        >
-          Delete
-        </Button>
+        {endpoint ? (
+          <Button
+            variant="outline"
+            loading={deleting}
+            onClick={() => handleDelete(record)}
+          >
+            Delete
+          </Button>
+        ) : null}
       </div>
     ),
   };
@@ -71,9 +78,9 @@ const CrudTable = <T extends object>({
         {buttons ?? <DefaultButtons />}
       </div>
       <AsyncTable<T>
-        isLoading={isLoading}
+        isLoading={isLoading && !tableData}
         columns={tableColumns}
-        data={data}
+        data={tableData ?? data}
         rowKey={rowKey}
         {...props}
       />

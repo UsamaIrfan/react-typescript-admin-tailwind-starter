@@ -18,6 +18,11 @@ export const siteSettings = {
         label: 'Products',
         icon: 'DashboardIcon',
       },
+      {
+        href: APP_ROUTES.ORDERS,
+        label: 'Orders',
+        icon: 'DashboardIcon',
+      },
     ],
   },
   avatar: {
